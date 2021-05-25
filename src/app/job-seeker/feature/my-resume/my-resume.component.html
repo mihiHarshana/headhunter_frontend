@@ -46,9 +46,9 @@
     <div *ngFor="let item of qualificationTypes" id="menu{{item.id}}" class="container tab-pane fade card"><br>
       <h3>{{item.qualificationType}}</h3>
       <p>Add your {{item.qualificationType | lowercase}} </p>
-      <div *ngFor="let i of qualifications" ><input required type="text" class="form-control"  placeholder="{{item.qualificationType}}"></div>
+      <div ><input required type="text" class="form-control"  placeholder="{{item.qualificationType}}"></div>
       <br>
-      <button   type="button" class="btn btn-outline-info" (click)="qualifications.length = qualifications.length + 1"> Add more </button>
+      <button   type="button" class="btn btn-outline-info"> Add more </button>
       <br>
       <br>
     </div>
