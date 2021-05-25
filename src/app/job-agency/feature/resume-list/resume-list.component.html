@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row" style="padding: 50px;">
+    <div class="col-md-12">
+      <h1>Resume List</h1>
+    </div>
+    <div class="col-md-4" *ngFor="let item of qualificationTypes">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <input  type="checkbox" (change)="changeCheckBox($event, item)" aria-label="Checkbox for following text input">
+          </div>
+        </div>
+        <input type="text" class="form-control" disabled [value]="item.qualificationType">
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchValue" aria-label="Text input with dropdown button">
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary my-lg-0 my-sm-0" (click)="searchResumes()" type="button">Search Resumes</button>
+    </div>
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          Resumes
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngIf="resumeSearchResponseModels.length === 0">
+            <div class="row">
+              <div class="col-md-12">
+                <p style="text-align: center">No records are available!</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item" *ngFor="let item of resumeSearchResponseModels">
+            <div class="row">
+              <div class="col-sm-3">
+                {{item.userFullName}}
+              </div>
+              <div class="col-sm-3">
+                {{item.emailAddress}}
+              </div>
+              <div class="col-sm-2">
+                {{item.telNo}}
+              </div>
+              <div class="col-sm-2">
+                {{item.userAddress}}
+              </div>
+              <div class="col-sm-2">
+                <button class="btn btn-success btn-sm" (click)="generatePDF()" type="button">Generate PDF</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>

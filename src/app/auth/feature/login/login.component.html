@@ -1,0 +1,39 @@
+<div *ngIf="successMessage" class="alert alert-success" role="alert">
+  {{successMessage}}
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  {{errorMessage}}
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="margin-top: 200px">
+      <h2 style="text-align: center">Headhunters</h2>
+      <div class="card">
+        <h4 class="card-header">Sign In</h4>
+        <div class="card-body">
+          <form [formGroup]="loginForm" >
+            <div class="form-group " >
+              <label for="userName">User Name</label>
+              <input required type="userName" class="form-control" formControlName="u_name" id="userName"  placeholder="User Name">
+
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input required type="password" class="form-control" formControlName="u_password" id="password" placeholder="Enter Password">
+            </div>
+            <div class="row" style="float: right;padding-right: 15px;">
+              <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary" (click)="login()" > Log in </button>
+            </div>
+            <br>
+            <br>
+            <div class="row" style="float: right;padding-right: 15px;">
+              <small  class="form-text text-muted text-right">New to Headhunters? <a routerLink="signup">Sign Up</a></small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="container mt-3">
+  <h2>My Resume</h2>
+  <br>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#home">Personal Details</a>
+    </li>
+    <li class="nav-item" *ngFor="let item of qualificationTypes">
+      <a class="nav-link" data-toggle="tab" href="#menu{{item.id}}">{{item.qualificationType}}</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="home" class="container tab-pane active card"><br>
+      <h3>Personal Details</h3>
+      <p>Please add your personal details</p>
+      <form [formGroup]="personalDetailsForm" >
+        <div class="form-group " >
+          <label for="f_name">First Name</label>
+          <input required type="text" class="form-control" formControlName="f_name" id="f_name"  placeholder="First Name">
+        </div>
+        <div class="form-group">
+          <label for="l_name">Last Name</label>
+          <input required type="text" class="form-control" formControlName="l_name" id="l_name" placeholder="Last Name">
+        </div>
+        <div class="form-group">
+          <label for="tel_no">Telephone Number</label>
+          <input required type="text" class="form-control" formControlName="tel_no" id="tel_no"  placeholder="Telephone Number">
+        </div>
+        <div class="form-group">
+          <label for="emailaddress">Email</label>
+          <input required type="text" class="form-control" formControlName="emailaddress" id="emailaddress"  placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input required type="text" class="form-control" formControlName="address" id="address"  placeholder="Address">
+        </div>
+        <button  [disabled]="personalDetailsForm.invalid" type="submit" class="btn btn-primary" (click)="savePersonalDetails()" > Continue </button>
+      </form>
+      <br>
+    </div>
+    <br>
+    <br>
+    <div *ngFor="let item of qualificationTypes" id="menu{{item.id}}" class="container tab-pane fade card"><br>
+      <h3>{{item.qualificationType}}</h3>
+      <p>Add your {{item.qualificationType | lowercase}} </p>
+      <div *ngFor="let i of qualifications" ><input required type="text" class="form-control"  placeholder="{{item.qualificationType}}"></div>
+      <br>
+      <button   type="button" class="btn btn-outline-info" (click)="qualifications.length = qualifications.length + 1"> Add more </button>
+      <br>
+      <br>
+    </div>
+  </div>
+</div>

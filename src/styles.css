@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-color: rgba(159,163,255,0.69);
+}
+.alert-success {
+  text-align: center;
+}
+.alert-danger {
+  text-align: center;
+}
