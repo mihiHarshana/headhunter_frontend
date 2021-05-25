@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { JobSeekerRoutingModule } from './job-seeker-routing.module';
 import { JobSeekerHomeComponent } from './feature/job-seeker-home/job-seeker-home.component';
 import { MyResumeComponent } from './feature/my-resume/my-resume.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -12,7 +12,8 @@ import {ReactiveFormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     JobSeekerRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class JobSeekerModule { }
