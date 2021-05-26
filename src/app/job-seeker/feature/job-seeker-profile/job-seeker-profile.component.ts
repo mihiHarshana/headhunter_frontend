@@ -1,49 +1,49 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../service/auth.service';
+import {AuthService} from '../../../auth/service/auth.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
-import {UserModel} from '../../model/user.model';
+import {UserModel} from '../../../auth/model/user.model';
+import {JobSeekerService} from '../../service/job-seeker.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-job-seeker-profile',
+  templateUrl: './job-seeker-profile.component.html',
+  styleUrls: ['./job-seeker-profile.component.css']
 })
-export class LoginComponent implements OnInit {
+export class JobSeekerProfileComponent implements OnInit {
 
-  loginForm: FormGroup = new FormGroup({
+  userForm: FormGroup = new FormGroup({
     u_id: new FormControl(''),
     u_name: new FormControl('', Validators.required),
     u_password: new FormControl('', Validators.required),
-    u_type: new FormControl('')
+    u_type: new FormControl('JS', Validators.required)
   });
   successMessage = '';
   errorMessage = '';
-
-  constructor(public service: AuthService,
+  userId = 0;
+  constructor(public service: JobSeekerService,
               private modalService: NgbModal,
               private router: Router) {
 
   }
   ngOnInit(): void {
+    // tslint:disable-next-line:radix
+    this.userId = parseInt(localStorage.getItem('user_id'));
+    this.service.getJobSeekerDetails(this.userId).subscribe(resp => {
+      this.userForm.setValue(resp);
+    });
   }
 
 
-  login() {
-    const user: UserModel = this.loginForm.value;
-    this.service.login(user).subscribe(
+  updateJobSeeker() {
+    const user: UserModel = this.userForm.value;
+    this.service.updateJobSeeker(user).subscribe(
       resp => {
         if (resp.code === 200) {
-          localStorage.setItem('user_id', resp.id);
           this.successMessage = resp.message;
           setTimeout(() => {
             this.successMessage = '';
-            if (resp.object.u_type === 'JS') {
-              this.router.navigate(['job-seeker-home/my-profile']);
-            } else if (resp.object.u_type === 'JA') {
-              this.router.navigate(['job-agency-home/my-profile']);
-            }
           }, 3000);
         } else {
           this.setErrorMessage(resp.message);
@@ -67,4 +67,6 @@ export class LoginComponent implements OnInit {
       this.successMessage = '';
     }, 5000);
   }
+
+
 }

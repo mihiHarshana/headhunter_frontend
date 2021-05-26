@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {JobSeekerHomeComponent} from './feature/job-seeker-home/job-seeker-home.component';
 import {MyResumeComponent} from './feature/my-resume/my-resume.component';
+import {JobSeekerProfileComponent} from './feature/job-seeker-profile/job-seeker-profile.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,10 @@ const routes: Routes = [
       {
         path: 'my-resume',
         component: MyResumeComponent
+      },
+      {
+        path: 'my-profile',
+        component: JobSeekerProfileComponent
       }
     ]
   }
