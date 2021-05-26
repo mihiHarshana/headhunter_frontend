@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     this.service.login(user).subscribe(
       resp => {
         if (resp.code === 200) {
+          localStorage.setItem('user_id', resp.id);
           this.successMessage = resp.message;
           setTimeout(() => {
             this.successMessage = '';
