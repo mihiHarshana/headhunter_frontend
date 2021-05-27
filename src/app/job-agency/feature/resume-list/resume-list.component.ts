@@ -49,8 +49,8 @@ export class ResumeListComponent implements OnInit {
     item.checked = event.target.checked;
   }
 
-  generatePDF() {
-    this.service.generatePdf()
+  generatePDF(id) {
+    this.service.generatePdf(id)
       .subscribe(x => {
         // It is necessary to create a new blob object with mime-type explicitly set
         // otherwise only Chrome works like it should

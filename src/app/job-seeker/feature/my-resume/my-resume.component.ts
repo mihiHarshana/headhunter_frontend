@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {JobSeekerService} from '../../service/job-seeker.service';
 import {QualificationTypeModel} from '../../../job-agency/model/qualification-type.model';
@@ -13,13 +13,13 @@ export class MyResumeComponent implements OnInit {
   personalDetailsForm: FormGroup = new FormGroup({
     cv_id: new FormControl(''),
     u_id: new FormControl(''),
-    f_name: new FormControl('', Validators.required),
-    l_name: new FormControl('', Validators.required),
-    tel_no: new FormControl('', Validators.required),
+    f_name: new FormControl('', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
+    l_name: new FormControl('', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
+    tel_no: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]*$'),
+    ]),
     address: new FormControl('', Validators.required),
-    emailaddress: new FormControl('', Validators.required)
+    emailaddress: new FormControl('', [Validators.required, Validators.email])
   });
-  qualificationTypes: QualificationTypeModel[] = [];
   qualifications: QualificationModel[] = [];
   qualificationsMenu1: QualificationModel[] = [];
   qualificationsMenu2: QualificationModel[] = [];
@@ -29,6 +29,7 @@ export class MyResumeComponent implements OnInit {
   qualificationsMenu6: QualificationModel[] = [];
   qualificationsMenu7: QualificationModel[] = [];
   userId = 0;
+  @ViewChild('menu1') menu1: HTMLMenuElement;
   constructor(public service: JobSeekerService) { }
 
   ngOnInit(): void {
@@ -139,7 +140,7 @@ export class MyResumeComponent implements OnInit {
 
   savePersonalDetails() {
     this.personalDetailsForm.value.u_id = this.userId;
-    this.service.addCV(this.personalDetailsForm.value).subscribe(resp => {
+    this.service.updateCV(this.personalDetailsForm.value).subscribe(resp => {
     }, error => {
       console.log(error.message);
     });

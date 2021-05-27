@@ -22,8 +22,8 @@ export class JobAgencyService {
     const  path = baseUrl +  `/qualification/search-qualifications`;
     return this.httpClient.put<ResumeSearchResponseModel[]>(path, model, headerJson);
   }
-  generatePdf(): Observable<Blob> {
-    const path = baseUrl + '/qualification/pdfReport';
+  generatePdf(id: number): Observable<Blob> {
+    const path = baseUrl + '/qualification/pdfReport?userId=' + id;
     return this.httpClient.get(path, { responseType: 'blob' });
   }
   updateJobAgency(user: UserModel): Observable<any> {
