@@ -141,6 +141,32 @@ export class MyResumeComponent implements OnInit {
   savePersonalDetails() {
     this.personalDetailsForm.value.u_id = this.userId;
     this.service.updateCV(this.personalDetailsForm.value).subscribe(resp => {
+      this.service.getCV(this.userId).subscribe(resp2 => {
+        if (resp2) {
+          this.personalDetailsForm.setValue(resp2);
+          this.service.getQualificationsByUserId(this.userId).subscribe(res => {
+            res.forEach(item => {
+              if (item.qualificationType === 1) {
+                this.qualificationsMenu1.push(item);
+              } else if (item.qualificationType === 2) {
+                this.qualificationsMenu2.push(item);
+              } else if (item.qualificationType === 3) {
+                this.qualificationsMenu3.push(item);
+              } else if (item.qualificationType === 4) {
+                this.qualificationsMenu4.push(item);
+              } else if (item.qualificationType === 5) {
+                this.qualificationsMenu5.push(item);
+              } else if (item.qualificationType === 6) {
+                this.qualificationsMenu6.push(item);
+              } else if (item.qualificationType === 7) {
+                this.qualificationsMenu7.push(item);
+              }
+            });
+          });
+        }
+      }, error => {
+        console.log(error.message);
+      });
     }, error => {
       console.log(error.message);
     });
