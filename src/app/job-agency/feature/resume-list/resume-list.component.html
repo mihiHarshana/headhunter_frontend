@@ -24,7 +24,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          Resumes
+          Resumes ({{resumeSearchResponseModels.length}} items are listed)
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item" *ngIf="resumeSearchResponseModels.length === 0">
@@ -49,7 +49,7 @@
                 {{item.userAddress}}
               </div>
               <div class="col-sm-2">
-                <button class="btn btn-success btn-sm" (click)="generatePDF(item.userId)" type="button">Generate PDF</button>
+                <button class="btn btn-success btn-sm" (click)="generatePDF(item.userId, item.userFullName)" type="button">Generate PDF</button>
               </div>
             </div>
           </li>

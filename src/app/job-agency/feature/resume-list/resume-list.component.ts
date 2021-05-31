@@ -49,7 +49,7 @@ export class ResumeListComponent implements OnInit {
     item.checked = event.target.checked;
   }
 
-  generatePDF(id) {
+  generatePDF(id, fullName) {
     this.service.generatePdf(id)
       .subscribe(x => {
         // It is necessary to create a new blob object with mime-type explicitly set
@@ -70,7 +70,7 @@ export class ResumeListComponent implements OnInit {
 
         const link = document.createElement('a');
         link.href = data;
-        link.download = 'cv.pdf';
+        link.download = fullName + '.pdf';
         // this is necessary as link.click() does not work on the latest firefox
         link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
 

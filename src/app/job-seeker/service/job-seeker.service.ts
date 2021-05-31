@@ -36,7 +36,7 @@ export class JobSeekerService {
   }
   getCV(userId: number): Observable<JobSeekerModel> {
     const path = baseUrl + `/jobSeeker/get-cv?userId=${userId}`;
-    return this.httpClient.get<any>(path, headerJson);
+    return this.httpClient.get<JobSeekerModel>(path, headerJson);
   }
   getQualificationsByUserId(userId: number): Observable<QualificationModel[]> {
     const path = baseUrl + `/qualification/get-user-qualifications?userId=${userId}`;
