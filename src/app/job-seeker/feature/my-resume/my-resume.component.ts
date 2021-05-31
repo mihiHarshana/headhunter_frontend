@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {JobSeekerService} from '../../service/job-seeker.service';
-import {QualificationTypeModel} from '../../../job-agency/model/qualification-type.model';
 import {QualificationModel} from '../../model/qualification.model';
+import {flatMap} from 'rxjs/operators';
+import {JobSeekerModel} from '../../model/job-seeker.model';
 
 @Component({
   selector: 'app-my-resume',
@@ -13,13 +14,13 @@ export class MyResumeComponent implements OnInit {
   personalDetailsForm: FormGroup = new FormGroup({
     cv_id: new FormControl(''),
     u_id: new FormControl(''),
-    f_name: new FormControl('', Validators.required),
-    l_name: new FormControl('', Validators.required),
-    tel_no: new FormControl('', Validators.required),
+    f_name: new FormControl('', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
+    l_name: new FormControl('', [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
+    tel_no: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]*$'),
+    ]),
     address: new FormControl('', Validators.required),
-    emailaddress: new FormControl('', Validators.required)
+    emailaddress: new FormControl('', [Validators.required, Validators.email])
   });
-  qualificationTypes: QualificationTypeModel[] = [];
   qualifications: QualificationModel[] = [];
   qualificationsMenu1: QualificationModel[] = [];
   qualificationsMenu2: QualificationModel[] = [];
@@ -29,6 +30,7 @@ export class MyResumeComponent implements OnInit {
   qualificationsMenu6: QualificationModel[] = [];
   qualificationsMenu7: QualificationModel[] = [];
   userId = 0;
+  @ViewChild('menu1') menu1: HTMLMenuElement;
   constructor(public service: JobSeekerService) { }
 
   ngOnInit(): void {
@@ -93,55 +95,61 @@ export class MyResumeComponent implements OnInit {
     }
   }
 
-  submitDetails() {
-    this.qualificationsMenu1.forEach(item => {
-      this.qualifications.push(item);
-    });
-    this.qualificationsMenu2.forEach(item => {
-      this.qualifications.push(item);
-    });
-    this.qualificationsMenu3.forEach(item => {
-      this.qualifications.push(item);
-    });
-    this.qualificationsMenu4.forEach(item => {
-      this.qualifications.push(item);
-    });
-    this.qualificationsMenu5.forEach(item => {
-      this.qualifications.push(item);
-    });
-    this.qualificationsMenu6.forEach(item => {
-      this.qualifications.push(item);
-    });
-    this.qualificationsMenu7.forEach(item => {
-      this.qualifications.push(item);
-    });
-    this.qualifications.forEach(item => {
-      if (item.id === 0 && item.value !== '' && item.value !== null) {
-        this.service.addQualification(item).subscribe(resp => {
-        }, error => {
-          console.log(error.message);
-        });
-      } else {
-        if (item.value !== '' && item.value !== null) {
-          this.service.updateQualification(item).subscribe(resp => {
+  savePersonalDetails() {
+    this.personalDetailsForm.value.u_id = this.userId;
+    this.service.updateCV(this.personalDetailsForm.value).pipe(
+      flatMap(resp => {
+        return this.service.getCV(this.userId);
+      })
+    ).subscribe(resp => {
+      if (resp) {
+        this.personalDetailsForm.setValue(resp);
+      }
+      this.qualificationsMenu1.forEach(item => {
+        this.qualifications.push(item);
+      });
+      this.qualificationsMenu2.forEach(item => {
+        this.qualifications.push(item);
+      });
+      this.qualificationsMenu3.forEach(item => {
+        this.qualifications.push(item);
+      });
+      this.qualificationsMenu4.forEach(item => {
+        this.qualifications.push(item);
+      });
+      this.qualificationsMenu5.forEach(item => {
+        this.qualifications.push(item);
+      });
+      this.qualificationsMenu6.forEach(item => {
+        this.qualifications.push(item);
+      });
+      this.qualificationsMenu7.forEach(item => {
+        this.qualifications.push(item);
+      });
+      this.qualifications.forEach((item) => {
+        if (item.id === 0 && item.value !== '' && item.value !== null) {
+          this.service.addQualification(item).subscribe(() => {
           }, error => {
             console.log(error.message);
           });
         } else {
-          this.service.deleteQualification(item.id).subscribe(resp => {
-          }, error => {
-            console.log(error.message);
-          });
+          if (item.value !== '' && item.value !== null) {
+            this.service.updateQualification(item).subscribe(() => {
+            }, error => {
+              console.log(error.message);
+            });
+          } else {
+            this.service.deleteQualification(item.id).subscribe(() => {
+            }, error => {
+              console.log(error.message);
+            });
+          }
         }
-      }
-    });
-  }
-
-  savePersonalDetails() {
-    this.personalDetailsForm.value.u_id = this.userId;
-    this.service.addCV(this.personalDetailsForm.value).subscribe(resp => {
+      });
     }, error => {
       console.log(error.message);
     });
   }
+
+
 }

@@ -5,6 +5,7 @@ import {QualificationTypeModel} from '../../job-agency/model/qualification-type.
 import {baseUrl, headerJson} from '../../config/config';
 import {QualificationModel} from '../model/qualification.model';
 import {JobSeekerModel} from '../model/job-seeker.model';
+import {UserModel} from '../../auth/model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class JobSeekerService {
   }
   getCV(userId: number): Observable<JobSeekerModel> {
     const path = baseUrl + `/jobSeeker/get-cv?userId=${userId}`;
-    return this.httpClient.get<any>(path, headerJson);
+    return this.httpClient.get<JobSeekerModel>(path, headerJson);
   }
   getQualificationsByUserId(userId: number): Observable<QualificationModel[]> {
     const path = baseUrl + `/qualification/get-user-qualifications?userId=${userId}`;
@@ -45,5 +46,12 @@ export class JobSeekerService {
     const path = baseUrl + `/qualification/delete-qualification?id=${qualificationId}`;
     return this.httpClient.delete<any>(path, headerJson);
   }
-
+  updateJobSeeker(user: UserModel): Observable<any> {
+    const  path = baseUrl +  `/user/update-user`;
+    return this.httpClient.put(path, user, headerJson);
+  }
+  getJobSeekerDetails(userId: number): Observable<UserModel> {
+    const path = baseUrl + `/user/get-user?userId=${userId}`;
+    return this.httpClient.get<UserModel>(path, headerJson);
+  }
 }

@@ -4,37 +4,36 @@
   <!-- Nav tabs -->
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#personal-details">Personal Details</a>
+      <a #pd class="nav-link active" data-toggle="tab" href="#personal-details">Personal Details</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#menu1">Education Qualification</a>
+      <a #m1 class="nav-link" data-toggle="tab" href="#menu1">Education Qualification</a>
     </li>
     <li class="nav-item" >
-      <a class="nav-link" data-toggle="tab" href="#menu2">Experience</a>
+      <a #m2 class="nav-link" data-toggle="tab" href="#menu2">Experience</a>
     </li>
     <li class="nav-item" >
-      <a class="nav-link" data-toggle="tab" href="#menu3">Job Sector</a>
+      <a #m3 class="nav-link" data-toggle="tab" href="#menu3">Job Sector</a>
     </li>
     <li class="nav-item" >
-      <a class="nav-link" data-toggle="tab" href="#menu4">Minimum Education Level</a>
+      <a #m4 class="nav-link" data-toggle="tab" href="#menu4">Minimum Education Level</a>
     </li>
     <li class="nav-item" >
-      <a class="nav-link" data-toggle="tab" href="#menu5">Minimum GCSE Passes</a>
+      <a #m5 class="nav-link" data-toggle="tab" href="#menu5">Minimum GCSE Passes</a>
     </li>
     <li class="nav-item" >
-      <a class="nav-link" data-toggle="tab" href="#menu6">Professional Skills</a>
+      <a #m6 class="nav-link" data-toggle="tab" href="#menu6">Professional Skills</a>
     </li>
     <li class="nav-item" >
-      <a class="nav-link" data-toggle="tab" href="#menu7">Specific Skills</a>
+      <a #m7 class="nav-link" data-toggle="tab" href="#menu7">Specific Skills</a>
     </li>
   </ul>
-
+  <form [formGroup]="personalDetailsForm" >
   <!-- Tab panes -->
   <div class="tab-content">
     <div id="personal-details" class="container tab-pane active card"><br>
       <h3>Personal Details</h3>
       <p>Please add your personal details</p>
-      <form [formGroup]="personalDetailsForm" >
         <div class="form-group " >
           <label for="f_name">First Name</label>
           <input required type="text" class="form-control" formControlName="f_name" id="f_name"  placeholder="First Name">
@@ -45,7 +44,7 @@
         </div>
         <div class="form-group">
           <label for="tel_no">Telephone Number</label>
-          <input required type="text" class="form-control" formControlName="tel_no" id="tel_no"  placeholder="Telephone Number">
+          <input required type="number" class="form-control" formControlName="tel_no" id="tel_no" min="0"  placeholder="Telephone Number">
         </div>
         <div class="form-group">
           <label for="emailaddress">Email</label>
@@ -55,8 +54,9 @@
           <label for="address">Address</label>
           <input required type="text" class="form-control" formControlName="address" id="address"  placeholder="Address">
         </div>
-        <button  type="submit" class="btn btn-outline-secondary"  (click)="savePersonalDetails()" > Continue </button>
-      </form>
+
+        <button  type="button" class="btn btn-outline-secondary"  (click)="m1.click()"> Continue </button>
+      <br>
       <br>
     </div>
     <br>
@@ -64,70 +64,102 @@
     <div  id="menu1" class="container tab-pane fade card"><br>
       <h3>Education Qualification</h3>
       <p>Add your {{'Education Qualification' | lowercase}} </p>
-      <div *ngFor="let item of qualificationsMenu1"><input  type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification"></div>
-      <br>
+      <div *ngFor="let item of qualificationsMenu1">
+        <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification">
+        <br>
+      </div>
       <button  type="button" class="btn btn-outline-info" (click)="addRows('MENU1')"> Add more </button>
+      <br>
+      <br>
+      <button  type="button" class="btn btn-outline-secondary" (click)="m2.click()"> Continue </button>
       <br>
       <br>
     </div>
     <div  id="menu2" class="container tab-pane fade card"><br>
       <h3>Experience</h3>
       <p>Add your {{'Experience' | lowercase}} </p>
-      <div *ngFor="let item of qualificationsMenu2"><input  type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification"></div>
+      <div *ngFor="let item of qualificationsMenu2">
+        <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification">
       <br>
+      </div>
       <button  type="button" class="btn btn-outline-info" (click)="addRows('MENU2')"> Add more </button>
+      <br>
+      <br>
+      <button  type="button" class="btn btn-outline-secondary" (click)="m3.click()"> Continue </button>
       <br>
       <br>
     </div>
     <div  id="menu3" class="container tab-pane fade card"><br>
       <h3>Job Sector</h3>
       <p>Add your {{'Job Sector' | lowercase}} </p>
-      <div *ngFor="let item of qualificationsMenu3"><input  type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification"></div>
+      <div *ngFor="let item of qualificationsMenu3">
+        <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification">
       <br>
+      </div>
       <button  type="button" class="btn btn-outline-info" (click)="addRows('MENU3')"> Add more </button>
-
+      <br>
+      <br>
+      <button  type="button" class="btn btn-outline-secondary" (click)="m4.click()"> Continue </button>
       <br>
       <br>
     </div>
     <div  id="menu4" class="container tab-pane fade card"><br>
       <h3>Minimum Education Level</h3>
       <p>Add your {{'Minimum Education Level' | lowercase}} </p>
-      <div *ngFor="let item of qualificationsMenu4"><input  type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification"></div>
+      <div *ngFor="let item of qualificationsMenu4">
+        <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification">
       <br>
+      </div>
       <button  type="button" class="btn btn-outline-info" (click)="addRows('MENU4')"> Add more </button>
+      <br>
+      <br>
+      <button  type="button" class="btn btn-outline-secondary" (click)="m5.click()"> Continue </button>
       <br>
       <br>
     </div>
     <div  id="menu5" class="container tab-pane fade card"><br>
       <h3>Minimum GCSE Passes</h3>
       <p>Add your {{'Minimum GCSE Passes' | lowercase}} </p>
-      <div *ngFor="let item of qualificationsMenu5"><input  type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification"></div>
+      <div *ngFor="let item of qualificationsMenu5">
+        <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification">
       <br>
+      </div>
       <button  type="button" class="btn btn-outline-info" (click)="addRows('MENU5')"> Add more </button>
+      <br>
+      <br>
+      <button  type="button" class="btn btn-outline-secondary" (click)="m6.click()"> Continue </button>
       <br>
       <br>
     </div>
     <div  id="menu6" class="container tab-pane fade card"><br>
       <h3>Professional Skills</h3>
       <p>Add your {{'Professional Skills' | lowercase}} </p>
-      <div *ngFor="let item of qualificationsMenu6"><input  type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification"></div>
-      <br>
+      <div *ngFor="let item of qualificationsMenu6">
+        <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification">
+        <br>
+      </div>
       <button  type="button" class="btn btn-outline-info" (click)="addRows('MENU6')"> Add more </button>
+      <br>
+      <br>
+      <button  type="button" class="btn btn-outline-secondary" (click)="m7.click()"> Continue </button>
       <br>
       <br>
     </div>
     <div  id="menu7" class="container tab-pane fade card"><br>
       <h3>Specific Skills</h3>
       <p>Add your {{'Specific Skills' | lowercase}} </p>
-      <div *ngFor="let item of qualificationsMenu7"><input  type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification"></div>
+      <div *ngFor="let item of qualificationsMenu7">
+        <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="item.value" class="form-control"  placeholder="Education Qualification">
       <br>
+      </div>
       <button  type="button" class="btn btn-outline-info" (click)="addRows('MENU7')"> Add more </button>
       <br>
       <br>
     </div>
   </div>
   <br>
-  <button type="button" class="btn btn-primary" (click)="submitDetails()">Submit Resume</button>
+  <button id="btnSubmitResume" [disabled]="personalDetailsForm.invalid" type="submit" class="btn btn-primary" (click)="savePersonalDetails()">Submit Resume</button>
   <br>
   <br>
+  </form>
 </div>
